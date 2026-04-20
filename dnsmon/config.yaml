@@ -2,7 +2,7 @@ name: "Custom DNS Monitor"
 version: "0.1.1"
 slug: dns_ip_monitor
 description: "Checks IP of up to 5 URLs and updates input_texts on change."
-url: https://github.com/dimxyp/haos_addons/tree/main/dnsmon
+url: https://github.com/Zakary2841/haos_addons/tree/main/dnsmon
 panel_icon: mdi:ip-network-outline
 startup: application
 boot: auto

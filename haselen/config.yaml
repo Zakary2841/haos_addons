@@ -2,7 +2,7 @@ name: "HaSelenium"
 version: "0.3.43"
 slug: haselen
 description: "Selenium automation for Home Assistant"
-url: https://github.com/dimxyp/haos_addons/tree/main/haselen
+url: https://github.com/Zakary2841/haos_addons/tree/main/haselen
 panel_icon: mdi:spider-web
 startup: services
 boot: auto

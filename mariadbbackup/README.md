@@ -70,7 +70,7 @@ conditions:
 actions:
   - action: hassio.addon_start
     data:
-      addon: 00000XX_mariadb-backup # name of mariadbbackup 
+      addon: 00000XX_mariadb-backup-zakary # name of mariadbbackup 
 mode: single
 ```
 
@@ -91,3 +91,4 @@ $DB_BACKUPDIR/mariadb_backup_YYYY-MM-DD_HH-MM-SS.sql
 
 ✍️ Author
 Made with 💙 by @dimx
+Edited with 🩵 by @Zakary2841

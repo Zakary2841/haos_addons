@@ -2,7 +2,7 @@ name: "YT-dlp"
 version: "1.0.6"
 slug: ytdlp
 description: "yt-dlp for ha"
-url: https://github.com/dimxyp/haos_addons/tree/main/ytdlp
+url: https://github.com/Zakary2841/haos_addons/tree/main/ytdlp
 panel_icon: mdi:download
 startup: services
 boot: auto
