@@ -90,5 +90,5 @@ $DB_BACKUPDIR/mariadb_backup_YYYY-MM-DD_HH-MM-SS.sql
 
 
 ✍️ Author
-Made with 💙 by @dimx
+Made with 💙 by @dimx <br>
 Edited with 🩵 by @Zakary2841

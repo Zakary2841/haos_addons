@@ -24,6 +24,15 @@ TIMESTP_LOG=$(date +"%Y%m%d%H%M")
 
 echo "$TIMESTP_LOG [INFO] Starting MariaDB dump process..."
 
+# Detect compression tool
+if command -v pigz >/dev/null 2>&1; then
+    COMPRESS_CMD="pigz"
+    echo "$TIMESTP_LOG [INFO] Using pigz for parallel compression"
+else
+    COMPRESS_CMD="gzip"
+    echo "$TIMESTP_LOG [INFO] Using gzip (install pigz in Dockerfile for faster compression)"
+fi
+
 # Validate backup directory exists
 if [ ! -d "$OUTPUT_FOLDER" ]; then
   echo "$TIMESTP_LOG [ERROR] Backup directory does not exist: $OUTPUT_FOLDER"
@@ -72,7 +81,7 @@ if [ "$DB_INCLUDE_SYSTEM" = "true" ] && [ "$DB_SEPARATE_FILES" != "true" ]; then
   echo "$TIMESTP_LOG [INFO] Backing up ALL databases to single file -> $OUTPUT_FILE"
 
   if mariadb-dump --skip-ssl --single-transaction --quick --events --routines --triggers \
-    -h "$DB_HOST" -u "$DB_USER" -p"$DB_PASS" --all-databases 2>/dev/null | gzip > "$OUTPUT_FILE"; then
+    -h "$DB_HOST" -u "$DB_USER" -p"$DB_PASS" --all-databases 2>/dev/null | $COMPRESS_CMD > "$OUTPUT_FILE"; then
     echo "$TIMESTP_LOG [SUCCESS] Full database backup completed."
   else
     echo "$TIMESTP_LOG [ERROR] Failed to back up databases."
@@ -94,7 +103,7 @@ else
     echo "$TIMESTP_LOG [INFO] Backing up database: $DB -> $OUTPUT_FILE"
 
     if mariadb-dump --skip-ssl --single-transaction --quick --events --routines --triggers \
-      -h "$DB_HOST" -u "$DB_USER" -p"$DB_PASS" "$DB" 2>/dev/null | gzip > "$OUTPUT_FILE"; then
+      -h "$DB_HOST" -u "$DB_USER" -p"$DB_PASS" "$DB" 2>/dev/null | $COMPRESS_CMD > "$OUTPUT_FILE"; then
       echo "$TIMESTP_LOG [SUCCESS] Database $DB backed up successfully."
     else
       echo "$TIMESTP_LOG [ERROR] Failed to back up database $DB."

@@ -1,4 +1,6 @@
 # Changelog
+## 2.4.1
+- Add pigz for faster compression on multicore systems
 
 ## 2.4
 - Add immediate gzip compression (no more tar archival)
