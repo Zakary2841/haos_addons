@@ -116,16 +116,23 @@ fi
 if [ "$DB_USE_FOLDERS" = "true" ]; then
   # Move files older than DB_NORMAL_RETENTION_DAYS to archive
   echo "$TIMESTP_LOG [INFO] Moving old backups to $DB_ARCHIVEDIR..."
-  find "$OUTPUT_FOLDER" -maxdepth 1 -type f -name '*.sql.gz' -mtime +$DB_NORMAL_RETENTION_DAYS -exec mv {} "$ARCHIVE_FOLDER/" \;
+  find "$OUTPUT_FOLDER" -maxdepth 1 -type f -name '*.sql.gz' -mtime +$DB_NORMAL_RETENTION_DAYS -print -exec mv {} "$ARCHIVE_FOLDER/" \; | while read -r file; do
+    echo "$TIMESTP_LOG [MOVED] $file -> $DB_ARCHIVEDIR/"
+  done
 
   # Delete files in archive older than DB_RETENTION_DAYS
   echo "$TIMESTP_LOG [INFO] Cleaning $DB_ARCHIVEDIR (files older than $DB_RETENTION_DAYS days)..."
-  find "$ARCHIVE_FOLDER" -type f -name '*.sql.gz' -mtime +$DB_RETENTION_DAYS -delete
+  find "$ARCHIVE_FOLDER" -type f -name '*.sql.gz' -mtime +$DB_RETENTION_DAYS -print -delete | while read -r file; do
+    echo "$TIMESTP_LOG [DELETED] $file"
+  done
 else
   # Flat mode: just delete everything older than DB_RETENTION_DAYS
   echo "$TIMESTP_LOG [INFO] Cleaning old backups (files older than $DB_RETENTION_DAYS days)..."
-  find "$OUTPUT_FOLDER" -maxdepth 1 -type f -name '*.sql.gz' -mtime +$DB_RETENTION_DAYS -delete
+  find "$OUTPUT_FOLDER" -maxdepth 1 -type f -name '*.sql.gz' -mtime +$DB_RETENTION_DAYS -print -delete | while read -r file; do
+    echo "$TIMESTP_LOG [DELETED] $file"
+  done
 fi
+
 
 # Remove empty directories
 find "$OUTPUT_FOLDER" -mindepth 1 -maxdepth 1 -type d -empty -delete 2>/dev/null || true
