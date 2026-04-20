@@ -1,4 +1,7 @@
 # Changelog
+## 2.4.3
+- Reordered config entries to have toggles at the bottom
+
 ## 2.4.2
 - Prints archived file to log for visibility
 
