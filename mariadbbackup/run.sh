@@ -16,11 +16,21 @@ DB_USE_FOLDERS=$(jq --raw-output '.DB_USE_FOLDERS // true' "$CONFIG_PATH")
 DB_FILENAME_FORMAT=$(jq --raw-output '.DB_FILENAME_FORMAT // "%Y%m%d_%H%M%S"' "$CONFIG_PATH")
 DB_INCLUDE_SYSTEM=$(jq --raw-output '.DB_INCLUDE_SYSTEM // false' "$CONFIG_PATH")
 DB_SEPARATE_FILES=$(jq --raw-output '.DB_SEPARATE_FILES // false' "$CONFIG_PATH")
+DB_TIMEZONE=$(jq --raw-output '.DB_TIMEZONE // "UTC"' "$CONFIG_PATH")
 
 OUTPUT_FOLDER="$DB_BACKUPDIR"
 ARCHIVE_FOLDER="$OUTPUT_FOLDER/$DB_ARCHIVEDIR"
 
-TIMESTP_LOG=$(date +"%Y%m%d%H%M")
+# Validate and export timezone
+export TZ="$DB_TIMEZONE"
+if ! date >/dev/null 2>&1; then
+  echo "[ERROR] Invalid timezone: $DB_TIMEZONE"
+  echo "[ERROR] Check valid zones at https://en.wikipedia.org/wiki/List_of_tz_database_time_zones"
+  exit 1
+fi
+
+TIMESTAMP=$(date +"$DB_FILENAME_FORMAT")
+TIMESTP_LOG=$(date +"%Y%m%d-%H%M")
 
 echo "$TIMESTP_LOG [INFO] Starting MariaDB dump process..."
 

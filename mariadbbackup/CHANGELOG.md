@@ -1,4 +1,7 @@
 # Changelog
+## 2.4.4
+- Added timezone support 
+
 ## 2.4.3
 - Reordered config entries to have toggles at the bottom
 

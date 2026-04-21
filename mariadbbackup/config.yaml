@@ -1,5 +1,5 @@
 name: MariaDB Backup
-version: "2.4.3"
+version: "2.4.4"
 slug: mariadb-backup-zakary
 description: Backup MariaDB databases using mariadb-dump
 url: https://github.com/Zakary2841/haos_addons/edit/main/mariadbbackup
@@ -30,9 +30,11 @@ options:
   DB_NORMAL_RETENTION_DAYS: 7
   DB_ARCHIVEDIR: Archive
   DB_FILENAME_FORMAT: "%Y%m%d_%H%M%S"
+  DB_TIMEZONE: UTC
   DB_USE_FOLDERS: true
   DB_INCLUDE_SYSTEM: false
   DB_SEPARATE_FILES: false
+  
 schema:
   DB_HOST: str
   DB_USER: str
@@ -42,6 +44,8 @@ schema:
   DB_NORMAL_RETENTION_DAYS: int
   DB_ARCHIVEDIR: str
   DB_FILENAME_FORMAT: str?
+  DB_TIMEZONE: list(Europe/London|Europe/Paris|Europe/Berlin|America/New_York|America/Chicago|America/Denver|America/Los_Angeles|Australia/Sydney|Asia/Tokyo|UTC)
   DB_USE_FOLDERS: bool
   DB_INCLUDE_SYSTEM: bool
   DB_SEPARATE_FILES: bool?
+  

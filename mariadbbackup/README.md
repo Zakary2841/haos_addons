@@ -38,15 +38,25 @@ You must provide database credentials and backup location in the add-on configur
 
 ## ⚙️ Comfiguration 
 
-```json
-{
-  "DB_HOST": "core-mariadb"   # your HA MariaDB - https://github.com/home-assistant/addons/tree/master/mariadb
-  "DB_USER": "homeassistant"
-  "DB_PASS": "YOUR_DB_PASSWORD"
-  "DB_BACKUPDIR": "/share/... /config/... or any other"
-  "DB_RETENTION_DAYS": "days of housekeeping retention"
-}
-```
+| Option | Description | Default |
+|--------|-------------|---------|
+| `DB_HOST` | MariaDB hostname | `core-mariadb` |
+| `DB_USER` | Database username | `homeassistant` |
+| `DB_PASS` | Database password | (required) |
+| `DB_BACKUPDIR` | Backup output directory | `/share` |
+| `DB_RETENTION_DAYS` | Days to keep archived backups | `60` |
+| `DB_NORMAL_RETENTION_DAYS` | Days before moving to archive | `7` |
+| `DB_ARCHIVEDIR` | Archive folder name | `Archive` |
+| `DB_FILENAME_FORMAT` | strftime format for timestamps | `%Y%m%d_%H%M%S` |
+| `DB_TIMEZONE` | Timezone for timestamps | `UTC` |
+| `DB_USE_FOLDERS` | Use archive folder structure | `true` |
+| `DB_INCLUDE_SYSTEM` | Include system databases | `false` |
+| `DB_SEPARATE_FILES` | Separate file per database (when including system) | `false` |
+
+
+### DB_TIMEZONE
+
+Select from common timezones. For other zones, fork and modify `config.yaml`.
 
 🚀 Manual Backup
 
