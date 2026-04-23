@@ -1,5 +1,5 @@
 name: MariaDB Backup
-version: "2.4.4"
+version: "2.4.5"
 slug: mariadb-backup-zakary
 description: Backup MariaDB databases using mariadb-dump
 url: https://github.com/Zakary2841/haos_addons/edit/main/mariadbbackup
