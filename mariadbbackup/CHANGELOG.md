@@ -1,8 +1,10 @@
 # Changelog
+## 2.4.6
+- Updated retention logic when using folder mode to properly keep files for the specified duration
 ## 2.4.5
 - Changed timestamp logic to update per line not once per run
 ## 2.4.4
-- Added timezone support 
+- Added timezone support
 ## 2.4.3
 - Reordered config entries to have toggles at the bottom
 ## 2.4.2

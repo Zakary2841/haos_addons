@@ -1,5 +1,5 @@
 name: MariaDB Backup
-version: "2.4.5"
+version: "2.4.6"
 slug: mariadb-backup-zakary
 description: Backup MariaDB databases using mariadb-dump
 url: https://github.com/Zakary2841/haos_addons/edit/main/mariadbbackup
@@ -34,7 +34,7 @@ options:
   DB_USE_FOLDERS: true
   DB_INCLUDE_SYSTEM: false
   DB_SEPARATE_FILES: false
-  
+
 schema:
   DB_HOST: str
   DB_USER: str
@@ -48,4 +48,3 @@ schema:
   DB_USE_FOLDERS: bool
   DB_INCLUDE_SYSTEM: bool
   DB_SEPARATE_FILES: bool?
-  

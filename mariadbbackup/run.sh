@@ -29,6 +29,15 @@ DB_TIMEZONE=$(jq --raw-output '.DB_TIMEZONE // "UTC"' "$CONFIG_PATH")
 OUTPUT_FOLDER="$DB_BACKUPDIR"
 ARCHIVE_FOLDER="$OUTPUT_FOLDER/$DB_ARCHIVEDIR"
 
+# In folder mode, files only enter the archive after DB_NORMAL_RETENTION_DAYS.
+# So to keep DB_RETENTION_DAYS worth of backups IN the archive, the deletion
+# threshold must be the sum of normal + archive days.
+if [ "$DB_USE_FOLDERS" = "true" ]; then
+    ARCHIVE_DELETE_DAYS=$((DB_RETENTION_DAYS + DB_NORMAL_RETENTION_DAYS))
+else
+    ARCHIVE_DELETE_DAYS="$DB_RETENTION_DAYS"
+fi
+
 # Validate timezone before exporting
 if ! TZ="$DB_TIMEZONE" date >/dev/null 2>&1; then
   log "ERROR" "Invalid timezone: $DB_TIMEZONE"
@@ -136,9 +145,9 @@ if [ "$DB_USE_FOLDERS" = "true" ]; then
     log "MOVED" "$file -> $DB_ARCHIVEDIR/"
   done
 
-  # Delete files in archive older than DB_RETENTION_DAYS
-  log "INFO" "Cleaning $DB_ARCHIVEDIR (files older than $DB_RETENTION_DAYS days)..."
-  find "$ARCHIVE_FOLDER" -type f -name '*.sql.gz' -mtime +$DB_RETENTION_DAYS -print -delete | while read -r file; do
+  # Delete files in archive older than ARCHIVE_DELETE_DAYS
+  log "INFO" "Cleaning $DB_ARCHIVEDIR (files older than $ARCHIVE_DELETE_DAYS days)..."
+  find "$ARCHIVE_FOLDER" -type f -name '*.sql.gz' -mtime +$ARCHIVE_DELETE_DAYS -print -delete | while read -r file; do
     log "DELETED" "$file"
   done
 else
